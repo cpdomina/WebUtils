@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+
+<project name="WebUtils" default="dist" basedir=".">
+    <description>
+        Web Utils - Web-related utilities for Java
+    </description>
+
+    <!-- Global Properties -->
+    <property name="src" location="src" />
+	<property name="lib" location="lib" />
+	
+    <property name="dist" location="dist" />
+    <property name="build" location="build" />
+
+    <property name="project.name" value="webutils" />
+    <property name="project.version" value="1.0" />
+
+    <path id="project.class.path">
+        <pathelement location="${lib}" />
+        <pathelement location="${build}" />
+        <fileset dir="${lib}">
+            <include name="**/*.jar"/>
+            <exclude name="**/${project.name}*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="init">
+        <pathconvert targetos="unix" property="classpath" refid="project.class.path" />
+        <echo>CLASSPATH=${classpath}</echo>
+    	<tstamp/>
+        <mkdir dir="${build}"/>
+    </target>
+
+    <target name="compile" depends="init"
+            description="Compile source files." >
+        <javac source="1.5" target="1.5" srcdir="${src}" destdir="${build}" debug="yes" deprecation="yes">
+            <classpath refid="project.class.path"/>
+        </javac>
+    </target>
+
+    <target name="build" depends="compile"
+            description="Compile sources and copy data files into build directory.">
+        <copy todir="${build}">
+            <fileset dir="${src}">
+                <exclude name="**/*.java" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="distfiles">
+       <!-- Copy in lib files -->
+        <mkdir dir="${dist}/lib" />
+
+    	<copy todir="${dist}/src">
+    	    <fileset dir="${src}"/>
+    	</copy>
+    	
+        <copy todir="${dist}/lib">
+            <fileset dir="${lib}">
+                <include name="**/*.jar" />
+                <exclude name="**/${project.name}*.jar"/>
+            </fileset>
+        </copy>
+    	
+    	<copy file="LICENSE" todir="${dist}"/>
+    	<copy file="README.md" todir="${dist}"/>
+
+    </target>
+
+    <target name="dist" depends="build,distfiles"
+            description="Generate a distribution" >
+    	
+        <!-- Make Jar file. -->
+        <jar jarfile="${dist}/${project.name}-${project.version}.jar"
+             basedir="${build}">
+        </jar>
+    </target>
+
+    <target name="clean" description="Clean up build files">
+        <delete dir="${build}" />
+        <delete dir="${dist}" />
+    </target>
+
+    <target name="dist-zip" depends="dist">
+        <zip destfile="${dist}/${project.name}-${DSTAMP}.zip">
+	    <zipfileset dir="${dist}">
+	    <include name="**/*"/>
+	    <exclude name="**/*.zip"/>
+	        </zipfileset>
+		</zip>
+    </target>
+</project>
+
