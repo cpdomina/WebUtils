@@ -21,7 +21,7 @@ Extracts a representative image from an HTML page. Looks for certain HTML tags t
 	URL url = extractor.thumbnail(new URL("https://github.com/cpdomina/WebUtils"), 3000);	//Returns the GitHub logo URL
 	
 	
-LinkParser
+Link Parser
 ----------
 Parses relevant information (title, description, author, keywords, and thumbnail) from HTML pages.
 
