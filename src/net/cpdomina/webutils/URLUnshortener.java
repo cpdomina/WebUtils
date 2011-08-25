@@ -47,7 +47,7 @@ public class URLUnshortener {
 	 * @param address
 	 * @return
 	 */
-	public URL expandShortURL(URL address) {
+	public URL expand(URL address) {
 		
 		//Check cache
 		URL inCache = cache.get(address);

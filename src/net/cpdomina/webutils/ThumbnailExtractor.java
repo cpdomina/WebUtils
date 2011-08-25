@@ -20,7 +20,8 @@ import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 
 /**
- * Extracts a representative thumbnail from an HTML page.
+ * Extracts a representative image from an HTML page. 
+ * Looks for certain HTML tags that usually contain the most representative image, returning the biggest image in the page otherwise.
  * @author Pedro Oliveira
  *
  */
@@ -55,7 +56,7 @@ public class ThumbnailExtractor {
 	 */
 	public URL thumbnail(URL url, int timeout) {
 		try {
-			thumbnail(Jsoup.connect(url.toString()).timeout(timeout).get());
+			return thumbnail(Jsoup.connect(url.toString()).timeout(timeout).get());
 		} catch (IOException e) {
 			LOGGER.warn("Problem while acquiring image for {}", url, e);
 		}
