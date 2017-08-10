@@ -34,5 +34,12 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	public static String encode64(String string) {
 		return Base64.getEncoder().encodeToString(string.getBytes());
 	}
+	
+	/**
+	 * @param string to decode in Base64
+	 */
+	public static String decode64(String string) {
+		return new String(Base64.getDecoder().decode(string));
+	}
 
 }
