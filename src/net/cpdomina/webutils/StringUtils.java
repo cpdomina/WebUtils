@@ -27,5 +27,12 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		
 		return writeValueAsString;
 	}
+	
+	/**
+	 * @param string to encode in Base64
+	 */
+	public static String encode64(String string) {
+		return Base64.getEncoder().encodeToString(string.getBytes());
+	}
 
 }
